@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "316207111947",
+    "firebase_url": "https://dops-1ad7c.firebaseio.com",
+    "project_id": "dops-1ad7c",
+    "storage_bucket": "dops-1ad7c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:316207111947:android:8c20742bcece8439",
+        "android_client_info": {
+          "package_name": "com.bcp.dops"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "316207111947-74inedgahcfm76r13egg262hud76600c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBdmh0AJ1cWxrQ_-mc5WalVGXJ2ctUtQNo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
