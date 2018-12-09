@@ -37,8 +37,8 @@ class _MyHomePageState extends State<MyHomePage> {
           BottomNavigationBarItem(
               icon: Icon(Icons.assessment), title: Text('KPIs')),
           BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('Home')),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.business), title: Text('Otros')),
+          /*BottomNavigationBarItem(
+              icon: Icon(Icons.business), title: Text('Otros')),*/
         ],
         currentIndex: _selectedIndex,
         fixedColor: Colors.blueAccent,

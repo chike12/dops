@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class ListKPIs extends StatefulWidget {
@@ -6,7 +7,6 @@ class ListKPIs extends StatefulWidget {
 }
 
 class ListKPIsState extends State<ListKPIs> {
-  final _kPIs = <String>[];
   final _biggerFont = const TextStyle(fontSize: 18.0);
 
   @override
@@ -14,9 +14,6 @@ class ListKPIsState extends State<ListKPIs> {
   @mustCallSuper
   void initState() {
     super.initState();
-    _kPIs.add("Experiencia");
-    _kPIs.add("Productividad");
-    _kPIs.add("Ahorro");
   }
 
   @override
@@ -25,24 +22,62 @@ class ListKPIsState extends State<ListKPIs> {
         appBar: AppBar(
           title: Text('KPIs'),
         ),
-        body: ListView.builder(
-            padding: const EdgeInsets.all(16.0),
-            itemCount: _kPIs.length,
-            itemBuilder: (context, i) {
-              return _buildKPIRow(_kPIs[i]);
-            }));
+        body: _buildListView(context));
   }
 
-  Widget _buildKPIRow(_project) {
+  Widget _buildListView(BuildContext context) {
+    return new StreamBuilder<QuerySnapshot>(
+        stream: Firestore.instance.collection('resultadoKpi').snapshots(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) return LinearProgressIndicator();
+          return ListView.builder(
+              padding: const EdgeInsets.all(16.0),
+              itemCount: snapshot.data.documents.length,
+              itemBuilder: (context, index) {
+                DocumentSnapshot ds = snapshot.data.documents[index];
+                ResultadoKpi resultadoKpi = new ResultadoKpi();
+                resultadoKpi.aspiracion = ds['aspiracion'];
+                resultadoKpi.meta = ds['meta'];
+                resultadoKpi.resultado = ds['resultado'];
+                resultadoKpi.periodo = ds['periodo'];
+                resultadoKpi.nombre = ds['nombre'];
+                return _buildKPIRow(context, resultadoKpi);
+              });
+        });
+  }
+
+  Widget _buildKPIRow(BuildContext context, ResultadoKpi resultadoKpi) {
     return ListTile(
-      leading: const Icon(
+      leading: Icon(
         Icons.lens,
-        color: Colors.green,
+        color: resultadoKpi.resultado / resultadoKpi.meta >= 0.95
+            ? Colors.green
+            : resultadoKpi.resultado / resultadoKpi.meta >= 0.7
+                ? Colors.yellow
+                : Colors.red,
       ),
       title: Text(
-        _project,
+        resultadoKpi.nombre,
         style: _biggerFont,
+      ),
+      subtitle: Text(
+        resultadoKpi.periodo,
+      ),
+      trailing: Column(
+        children: <Widget>[
+          Text('Meta: ' + resultadoKpi.meta.toString() + '%'),
+          Text('Real: ' + resultadoKpi.resultado.toString() + '%'),
+          Text('Aspiracion: ' + resultadoKpi.aspiracion.toString() + '%'),
+        ],
       ),
     );
   }
+}
+
+class ResultadoKpi {
+  int aspiracion = 0;
+  int meta = 0;
+  int resultado = 0;
+  String periodo = '';
+  String nombre = '';
 }
