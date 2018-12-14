@@ -68,11 +68,27 @@ class ListKPIsState extends State<ListKPIs> {
       subtitle: Text(
         resultadoKpi.periodo,
       ),
-      trailing: Column(
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Text('Meta: ' + resultadoKpi.meta.toString() + '%'),
-          Text('Real: ' + resultadoKpi.resultado.toString() + '%'),
-          Text('Aspiracion: ' + resultadoKpi.aspiracion.toString() + '%'),
+          Column(
+            children: <Widget>[
+              Text('Meta: '),
+              Text(resultadoKpi.meta.toString() + '%'),
+            ],
+          ),
+          Column(
+            children: <Widget>[
+              Text('Real: '),
+              Text(resultadoKpi.resultado.toString() + '%'),
+            ],
+          ),
+          Column(
+            children: <Widget>[
+              Text('Aspiracion: '),
+              Text(resultadoKpi.aspiracion.toString() + '%'),
+            ],
+          )
         ],
       ),
     );
