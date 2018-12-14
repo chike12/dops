@@ -2,19 +2,21 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class ListKPIs extends StatefulWidget {
+  final String projectName;
+
+  // In the constructor, require a projectName
+  ListKPIs({Key key, @required this.projectName}) : super();
+
   @override
-  ListKPIsState createState() => new ListKPIsState();
+  ListKPIsState createState() => new ListKPIsState(projectName: projectName);
 }
 
 class ListKPIsState extends State<ListKPIs> {
   final _biggerFont = const TextStyle(fontSize: 18.0);
+  final String projectName;
 
-  @override
-  @protected
-  @mustCallSuper
-  void initState() {
-    super.initState();
-  }
+  // In the constructor, require a projectName
+  ListKPIsState({Key key, @required this.projectName}) : super();
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +29,10 @@ class ListKPIsState extends State<ListKPIs> {
 
   Widget _buildListView(BuildContext context) {
     return new StreamBuilder<QuerySnapshot>(
-        stream: Firestore.instance.collection('resultadoKpi').snapshots(),
+        stream: Firestore.instance
+            .collection('resultadoKpi')
+            .where('nombreProyecto', isEqualTo: projectName)
+            .snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) return LinearProgressIndicator();
           return ListView.builder(

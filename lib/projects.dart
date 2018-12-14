@@ -21,27 +21,29 @@ class ListProjectsState extends State<ListProjects> {
               padding: const EdgeInsets.all(16.0),
               itemBuilder: (context, index) {
                 DocumentSnapshot ds = snapshot.data.documents[index];
-                return _buildProjectRow('${ds['nombre']}');
-                //'${ds['nombre']}:\n${ds['campo2']}\n---',
+                return _buildProjectRow('${ds['nombre']}', '${ds['icon']}');
               });
         });
   }
 
-  Widget _buildProjectRow(String _project) {
+  Widget _buildProjectRow(String _projectName, String _projectIcon) {
     return ListTile(
-      leading: const Icon(
-        Icons.lens,
-        color: Colors.green,
-      ),
+      leading: projectIcon(_projectIcon),
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (_) {
-          return ListKPIs();
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return ListKPIs(projectName: _projectName);
         }));
       },
       title: Text(
-        _project,
+        _projectName,
         style: _biggerFont,
       ),
     );
+  }
+
+  Widget projectIcon(String _projectIcon) {
+    IconData acUnit =
+        IconData(int.parse(_projectIcon), fontFamily: 'MaterialIcons');
+    return Icon(acUnit);
   }
 }

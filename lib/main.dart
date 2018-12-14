@@ -1,3 +1,4 @@
+import 'package:dops/home.dart';
 import 'package:flutter/material.dart';
 import 'projects.dart';
 
@@ -31,7 +32,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: _selectedIndex == 0
           ? ListProjects()
-          : _selectedIndex == 1 ? Text('Home') : Text('Otros'),
+          : _selectedIndex == 1 ? Home() : Text('Otros'),
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
